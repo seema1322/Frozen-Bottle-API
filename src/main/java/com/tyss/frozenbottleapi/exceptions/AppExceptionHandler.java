@@ -11,8 +11,8 @@ import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 @ControllerAdvice
 public class AppExceptionHandler {
 
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ResponseStructure<String>> userNotFoundException(UserNotFoundException exception) {
+	@ExceptionHandler(IdNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> userNotFoundException(IdNotFoundException exception) {
 
 		ResponseStructure<String> responseStructure = new ResponseStructure<>();
 		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
@@ -22,14 +22,22 @@ public class AppExceptionHandler {
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<ResponseStructure<String>> dataIntegrityViolationException(
-			DataIntegrityViolationException exception) {
+	public ResponseEntity<ResponseStructure<String>> dataIntegrityViolationException(DataIntegrityViolationException exception) {
+		
 		ResponseStructure<String> responseStructure = new ResponseStructure<>();
 		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
 		responseStructure.setMessage("Not Found");
 		responseStructure.setData("Please avoid duplicate/null entries");
-		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
-				responseStructure, HttpStatus.NO_CONTENT);
-		return responseEntity;
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+	
+	@ExceptionHandler(NoRecordsFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> noRecordsFoundException(NoRecordsFoundException exception){
+		
+		ResponseStructure<String> responseStructure = new ResponseStructure<>();
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("Not Found");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}
 }

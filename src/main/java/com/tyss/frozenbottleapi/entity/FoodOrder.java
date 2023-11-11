@@ -28,13 +28,12 @@ public class FoodOrder {
 	
 	private String status;
 	private double price;
+	private String couponCode;
 	
 	@CreationTimestamp
 	private LocalDateTime orderCreatedTime;
 	
-	@UpdateTimestamp
 	private LocalDateTime orderDeliveredTime;
-	
 	private String customerName;
 	private String email;
 	
