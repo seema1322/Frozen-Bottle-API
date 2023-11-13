@@ -12,7 +12,7 @@ import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 public class AppExceptionHandler {
 
 	@ExceptionHandler(IdNotFoundException.class)
-	public ResponseEntity<ResponseStructure<String>> userNotFoundException(IdNotFoundException exception) {
+	public ResponseEntity<ResponseStructure<String>> notFoundException(IdNotFoundException exception) {
 
 		ResponseStructure<String> responseStructure = new ResponseStructure<>();
 		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
@@ -39,5 +39,25 @@ public class AppExceptionHandler {
 		responseStructure.setMessage("Not Found");
 		responseStructure.setData(exception.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+	
+	@ExceptionHandler(CouponExpiredException.class)
+	public ResponseEntity<ResponseStructure<String>> couponExpiredException(CouponExpiredException exception){
+		
+		ResponseStructure<String> responseStructure = new ResponseStructure<>();
+		responseStructure.setStatusCode(HttpStatus.GONE.value());
+		responseStructure.setMessage("Coupon expired");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.GONE);
+	}
+	
+	@ExceptionHandler(CouponNotValidException.class)
+	public ResponseEntity<ResponseStructure<String>> couponNotValidException(CouponNotValidException exception){
+		
+		ResponseStructure<String> responseStructure = new ResponseStructure<>();
+		responseStructure.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
+		responseStructure.setMessage("Coupon not valid");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_ACCEPTABLE);
 	}
 }
