@@ -58,4 +58,9 @@ public class UserController {
 	public ResponseEntity<ResponseStructure<String>> deleteUser(@PathVariable int userid){
 		return userService.deleteUser(userid);
 	}
+	
+	@GetMapping("/user/{email}")
+	public ResponseEntity<ResponseStructure<User>> findUserById(@PathVariable String email) {
+		return userService.findUserByEmail(email);
+	}
 }

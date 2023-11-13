@@ -32,4 +32,14 @@ public class AppExceptionHandler {
 				responseStructure, HttpStatus.NO_CONTENT);
 		return responseEntity;
 	}
+	
+	@ExceptionHandler(ItemNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> itemNotFoundException(ItemNotFoundException exception) {
+
+		ResponseStructure<String> responseStructure = new ResponseStructure<>();
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("Not found");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
 }
