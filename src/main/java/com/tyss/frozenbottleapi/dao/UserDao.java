@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tyss.frozenbottleapi.entity.User;
+import com.tyss.frozenbottleapi.entity.UserRole;
 import com.tyss.frozenbottleapi.repository.UserRepository;
 
 @Repository
@@ -36,7 +37,7 @@ public class UserDao {
 		return userRepository.findAll();
 	}
 
-	public List<User> findUserByRole(String role){
+	public List<User> findUserByRole(UserRole role){ 
 		return userRepository.findByRole(role);
 	}
 	

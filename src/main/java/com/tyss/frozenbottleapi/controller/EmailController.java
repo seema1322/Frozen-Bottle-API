@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 import com.tyss.frozenbottleapi.service.EmailService;
 
+import jakarta.mail.MessagingException;
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {
@@ -18,7 +20,7 @@ public class EmailController {
 	private EmailService emailService;
 	
 	@PostMapping("/{customerId}/{couponId}")
-	public ResponseEntity<ResponseStructure<String>> sendMail(@PathVariable int customerId, @PathVariable int couponId){
+	public ResponseEntity<ResponseStructure<String>> sendMail(@PathVariable int customerId, @PathVariable int couponId) throws MessagingException{
 		return emailService.sendCouponToCustomerMail(customerId, couponId);
 	}
 }

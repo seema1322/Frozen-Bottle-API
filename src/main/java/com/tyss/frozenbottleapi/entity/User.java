@@ -28,8 +28,9 @@ public class User {
 
 	@Column(unique = true, nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
-	private String role;
+	private UserRole role;
 
 	@OneToOne(mappedBy = "user")
 	private Menu menu;

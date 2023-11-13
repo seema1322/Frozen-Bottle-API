@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tyss.frozenbottleapi.dao.UserDao;
 import com.tyss.frozenbottleapi.entity.User;
+import com.tyss.frozenbottleapi.entity.UserRole;
 import com.tyss.frozenbottleapi.exceptions.IdNotFoundException;
 import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 
@@ -19,16 +20,24 @@ public class UserService {
 	private UserDao userDao;
 
 	public ResponseEntity<ResponseStructure<User>> saveUser(User user) {
-		User userSaved = userDao.saveUser(user);
-		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
-		responseStructure.setStatusCode(HttpStatus.CREATED.value());
-		responseStructure.setMessage("Data Saved");
-		responseStructure.setData(userSaved);
 
-		ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
-				responseStructure, HttpStatus.CREATED);
+		List<User> users = userDao.findUserByRole(UserRole.ADMIN);
+		if (users.isEmpty()) {
+			throw new IdNotFoundException("Admin for this application is already present");
 
-		return responseEntity;
+		} else {
+			User userSaved = userDao.saveUser(user);
+			ResponseStructure<User> responseStructure = new ResponseStructure<User>();
+			responseStructure.setStatusCode(HttpStatus.CREATED.value());
+			responseStructure.setMessage("Data Saved");
+			responseStructure.setData(userSaved);
+
+			ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
+					responseStructure, HttpStatus.CREATED);
+
+			return responseEntity;
+		}
+
 	}
 
 	public ResponseEntity<ResponseStructure<User>> updateUser(int userid, String name) {
@@ -57,7 +66,7 @@ public class UserService {
 		if (user != null) {
 			ResponseStructure<User> responseStructure = new ResponseStructure<User>();
 			responseStructure.setStatusCode(HttpStatus.FOUND.value());
-			responseStructure.setMessage("User details with id "+userid);
+			responseStructure.setMessage("User details with id " + userid);
 			responseStructure.setData(user);
 
 			ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
@@ -68,10 +77,10 @@ public class UserService {
 			throw new IdNotFoundException("No user found with Id " + userid);
 		}
 	}
-	
-	public ResponseEntity<ResponseStructure<List<User>>> findAllUsers(){
+
+	public ResponseEntity<ResponseStructure<List<User>>> findAllUsers() {
 		List<User> users = userDao.findAllUser();
-		
+
 		if (!users.isEmpty()) {
 			ResponseStructure<List<User>> responseStructure = new ResponseStructure<List<User>>();
 			responseStructure.setStatusCode(HttpStatus.FOUND.value());
@@ -85,14 +94,22 @@ public class UserService {
 		}
 		throw new IdNotFoundException("No users are present in database");
 	}
-	
-	public ResponseEntity<ResponseStructure<List<User>>> findUserByRole(String role){
-		List<User> users = userDao.findUserByRole(role);
-		
+
+	public ResponseEntity<ResponseStructure<List<User>>> findUserByRole(String role) {
+		UserRole role1 = null;
+		if (role.equalsIgnoreCase("admin")) {
+			role1 = UserRole.ADMIN;
+		} else if (role.equalsIgnoreCase("customer")) {
+			role1 = UserRole.CUSTOMER;
+		} else {
+			role1 = UserRole.STAFF;
+		}
+		List<User> users = userDao.findUserByRole(role1);
+
 		if (!users.isEmpty()) {
 			ResponseStructure<List<User>> responseStructure = new ResponseStructure<List<User>>();
 			responseStructure.setStatusCode(HttpStatus.FOUND.value());
-			responseStructure.setMessage("Below users are present with role "+role);
+			responseStructure.setMessage("Below users are present with role " + role);
 			responseStructure.setData(users);
 
 			ResponseEntity<ResponseStructure<List<User>>> responseEntity = new ResponseEntity<ResponseStructure<List<User>>>(
@@ -100,9 +117,11 @@ public class UserService {
 
 			return responseEntity;
 		}
-		throw new IdNotFoundException("No users are present with role "+role);
+
+		throw new IdNotFoundException("No users are present with role " + role);
+
 	}
-	
+
 	public ResponseEntity<ResponseStructure<User>> findUserByEmailAndPassword(String email, String password) {
 		User user = userDao.findUserByEmailAndPassword(email, password);
 
@@ -120,8 +139,8 @@ public class UserService {
 			throw new IdNotFoundException("Invalid Credentials");
 		}
 	}
-	
-	public ResponseEntity<ResponseStructure<String>> deleteUser(int userid){
+
+	public ResponseEntity<ResponseStructure<String>> deleteUser(int userid) {
 		User user = userDao.findUserById(userid);
 		if (user != null) {
 			ResponseStructure<String> responseStructure = new ResponseStructure<String>();
@@ -137,14 +156,14 @@ public class UserService {
 			throw new IdNotFoundException("No user found to delete with Id " + userid);
 		}
 	}
-	
+
 	public ResponseEntity<ResponseStructure<User>> findUserByEmail(String email) {
 		User user = userDao.findUserByEmail(email);
 
 		if (user != null) {
 			ResponseStructure<User> responseStructure = new ResponseStructure<User>();
 			responseStructure.setStatusCode(HttpStatus.FOUND.value());
-			responseStructure.setMessage("User details with email "+email);
+			responseStructure.setMessage("User details with email " + email);
 			responseStructure.setData(user);
 
 			ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(

@@ -34,21 +34,6 @@ public class CouponService {
 		return new ResponseEntity<ResponseStructure<Coupon>>(responseStructure, HttpStatus.CREATED);
 	}
 	
-	public ResponseEntity<ResponseStructure<Coupon>> updateIfSetToCustomer(int id, boolean isSetToCustomer){
-		Coupon coupon = couponDao.getCouponById(id);
-		if(coupon!=null) {
-			couponDao.updateIfMailSent(id, isSetToCustomer);
-			
-			ResponseStructure<Coupon> responseStructure = new ResponseStructure<>();
-			responseStructure.setStatusCode(HttpStatus.OK.value());
-			responseStructure.setMessage("Data updated");
-			responseStructure.setData(coupon);
-			
-			return new ResponseEntity<ResponseStructure<Coupon>>(responseStructure, HttpStatus.OK);
-		}
-		throw new IdNotFoundException("The entered coupon id["+id+"] is not present to update");
-	}
-	
 	public ResponseEntity<ResponseStructure<Coupon>> updateIfUsed(int id, boolean isUsed){
 		Coupon coupon = couponDao.getCouponById(id);
 		if(coupon!=null) {
