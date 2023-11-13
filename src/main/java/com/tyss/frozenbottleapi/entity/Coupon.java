@@ -1,5 +1,8 @@
 package com.tyss.frozenbottleapi.entity;
 
+import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,25 +10,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-public class Branch {
+public class Coupon {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int couponId;
 	
-	private String branchName;
-	private String address;
-	private long phoneNumber;
-	private String email;
+	@Column(unique = true, nullable = false)
+	private String couponCode;
+	private int discount;
+	private boolean isSetToCustomer;
+	private LocalDate expiryDate;
+	private double validForPrice;
+	private boolean isUsed;
 	
 	@ManyToOne
 	@JoinColumn
 	private User user;
-
+	
 }

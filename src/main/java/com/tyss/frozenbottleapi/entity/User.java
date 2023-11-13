@@ -39,5 +39,7 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	List<FoodOrder> orders;
-
+	
+	@OneToMany(mappedBy = "user")
+	List<Coupon> coupons;
 }
