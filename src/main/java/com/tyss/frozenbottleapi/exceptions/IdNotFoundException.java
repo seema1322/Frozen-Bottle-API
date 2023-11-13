@@ -1,20 +1,20 @@
 package com.tyss.frozenbottleapi.exceptions;
 
-public class UserNotFoundException extends RuntimeException {
+public class IdNotFoundException extends RuntimeException {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String message = "Request user details are not found";
+	private String message = "Id not found";
 
 	
-	public UserNotFoundException() {
+	public IdNotFoundException() {
 		
 	}
 
-	public UserNotFoundException(String message) {
+	public IdNotFoundException(String message) {
 		this.message = message;
 	}
 

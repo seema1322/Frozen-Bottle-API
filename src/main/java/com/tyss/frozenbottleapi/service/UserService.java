@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.tyss.frozenbottleapi.dao.UserDao;
 import com.tyss.frozenbottleapi.entity.User;
+<<<<<<< HEAD
 import com.tyss.frozenbottleapi.entity.UserRole;
 import com.tyss.frozenbottleapi.exceptions.UserNotFoundException;
+=======
+import com.tyss.frozenbottleapi.exceptions.IdNotFoundException;
+>>>>>>> eebbdf12a458d0aaf3b98ab72704b8f9117b2648
 import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 
 @Service
@@ -56,7 +60,7 @@ public class UserService {
 
 			return responseEntity;
 		} else {
-			throw new UserNotFoundException("No user found to update with Id " + userid);
+			throw new IdNotFoundException("No user found to update with Id " + userid);
 		}
 	}
 
@@ -74,7 +78,7 @@ public class UserService {
 
 			return responseEntity;
 		} else {
-			throw new UserNotFoundException("No user found with Id " + userid);
+			throw new IdNotFoundException("No user found with Id " + userid);
 		}
 	}
 
@@ -92,7 +96,7 @@ public class UserService {
 
 			return responseEntity;
 		}
-		throw new UserNotFoundException("No users are present in database");
+		throw new IdNotFoundException("No users are present in database");
 	}
 
 	public ResponseEntity<ResponseStructure<List<User>>> findUserByRole(String role) {
@@ -117,7 +121,11 @@ public class UserService {
 
 			return responseEntity;
 		}
+<<<<<<< HEAD
 		throw new UserNotFoundException("No users are present with role " + role);
+=======
+		throw new IdNotFoundException("No users are present with role "+role);
+>>>>>>> eebbdf12a458d0aaf3b98ab72704b8f9117b2648
 	}
 
 	public ResponseEntity<ResponseStructure<User>> findUserByEmailAndPassword(String email, String password) {
@@ -134,7 +142,7 @@ public class UserService {
 
 			return responseEntity;
 		} else {
-			throw new UserNotFoundException("Invalid Credentials");
+			throw new IdNotFoundException("Invalid Credentials");
 		}
 	}
 
@@ -151,7 +159,7 @@ public class UserService {
 
 			return responseEntity;
 		} else {
-			throw new UserNotFoundException("No user found to delete with Id " + userid);
+			throw new IdNotFoundException("No user found to delete with Id " + userid);
 		}
 	}
 
@@ -169,7 +177,7 @@ public class UserService {
 
 			return responseEntity;
 		} else {
-			throw new UserNotFoundException("No user found with Id " + email);
+			throw new IdNotFoundException("No user found with Id " + email);
 		}
 	}
 }
