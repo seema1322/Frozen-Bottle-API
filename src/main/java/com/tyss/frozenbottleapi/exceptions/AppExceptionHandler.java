@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 
+import jakarta.mail.MessagingException;
+
 @ControllerAdvice
 public class AppExceptionHandler {
 
@@ -67,6 +69,16 @@ public class AppExceptionHandler {
 		ResponseStructure<String> responseStructure = new ResponseStructure<>();
 		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
 		responseStructure.setMessage("Not found");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+	
+	@ExceptionHandler(MessagingException.class)
+	public ResponseEntity<ResponseStructure<String>> messagingException(MessagingException exception) {
+
+		ResponseStructure<String> responseStructure = new ResponseStructure<>();
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("MessagingException exception");
 		responseStructure.setData(exception.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}

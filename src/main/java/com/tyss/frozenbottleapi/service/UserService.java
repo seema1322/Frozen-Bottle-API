@@ -9,12 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.tyss.frozenbottleapi.dao.UserDao;
 import com.tyss.frozenbottleapi.entity.User;
-<<<<<<< HEAD
 import com.tyss.frozenbottleapi.entity.UserRole;
-import com.tyss.frozenbottleapi.exceptions.UserNotFoundException;
-=======
 import com.tyss.frozenbottleapi.exceptions.IdNotFoundException;
->>>>>>> eebbdf12a458d0aaf3b98ab72704b8f9117b2648
 import com.tyss.frozenbottleapi.responsestructure.ResponseStructure;
 
 @Service
@@ -27,7 +23,7 @@ public class UserService {
 
 		List<User> users = userDao.findUserByRole(UserRole.ADMIN);
 		if (users.isEmpty()) {
-			throw new UserNotFoundException("Admin for this application is already present");
+			throw new IdNotFoundException("Admin for this application is already present");
 
 		} else {
 			User userSaved = userDao.saveUser(user);
@@ -121,11 +117,9 @@ public class UserService {
 
 			return responseEntity;
 		}
-<<<<<<< HEAD
-		throw new UserNotFoundException("No users are present with role " + role);
-=======
-		throw new IdNotFoundException("No users are present with role "+role);
->>>>>>> eebbdf12a458d0aaf3b98ab72704b8f9117b2648
+
+		throw new IdNotFoundException("No users are present with role " + role);
+
 	}
 
 	public ResponseEntity<ResponseStructure<User>> findUserByEmailAndPassword(String email, String password) {

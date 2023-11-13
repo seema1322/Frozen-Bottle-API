@@ -19,15 +19,8 @@ public class CouponDao {
 		return couponRepository.save(coupon);
 	}
 	
-	public Coupon updateIfMailSent(int id, boolean isSetToCustomer) {
-		Optional<Coupon> optional = couponRepository.findById(id);
-		if(optional.isPresent()) {
-			Coupon coupon = optional.get();
-			coupon.setSetToCustomer(isSetToCustomer);
-			
-			return couponRepository.save(coupon);
-		}
-		return null;
+	public Coupon updateIfMailSent(Coupon coupon) {
+		return couponRepository.save(coupon);
 	}
 	
 	public Coupon getCouponByCode(String couponCode) {
