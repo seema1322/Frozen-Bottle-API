@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,13 +27,12 @@ public class FoodOrder {
 	
 	private String status;
 	private double price;
+	private String couponCode;
 	
 	@CreationTimestamp
 	private LocalDateTime orderCreatedTime;
 	
-	@UpdateTimestamp
 	private LocalDateTime orderDeliveredTime;
-	
 	private String customerName;
 	private String email;
 	

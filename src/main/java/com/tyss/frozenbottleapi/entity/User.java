@@ -28,8 +28,9 @@ public class User {
 
 	@Column(unique = true, nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
-	private String role;
+	private UserRole role;
 
 	@OneToOne(mappedBy = "user")
 	private Menu menu;
@@ -39,5 +40,7 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	List<FoodOrder> orders;
-
+	
+	@OneToMany(mappedBy = "user")
+	List<Coupon> coupons;
 }

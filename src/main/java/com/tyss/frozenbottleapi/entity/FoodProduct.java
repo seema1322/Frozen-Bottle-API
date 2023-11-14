@@ -24,7 +24,6 @@ public class FoodProduct {
 	private String about;
 	private String availability;
 	private double price;
-	private String offers;
 	
 	@ManyToOne
 	@JoinColumn
