@@ -82,4 +82,30 @@ public class AppExceptionHandler {
 		responseStructure.setData(exception.getMessage());
 		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
 	}
+	@ExceptionHandler(FoodProductNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> foodProductNotFoundException(
+			FoodProductNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("not found");
+		responseStructure.setData(exception.getMessage());
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+
+	@ExceptionHandler(BranchNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> branchNotFoundException(BranchNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setData(exception.getMessage());
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("not found");
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
+	@ExceptionHandler(MenuNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> menuNotFoundException(MenuNotFoundException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		responseStructure.setData(exception.getMessage());
+		responseStructure.setStatusCode(HttpStatus.NO_CONTENT.value());
+		responseStructure.setMessage("not found");
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NO_CONTENT);
+	}
 }
